@@ -25,10 +25,18 @@ pipeline {
 
                 if (currentBuild.number < 10) {
                         // Define the tag name based on branch name
-                        def tagName = "marge-base-${env.BRANCH_NAME}"
+                        def tagName = "merge-base-${env.BRANCH_NAME}"
 
 
                         withCredentials([usernamePassword(credentialsId: 'githubcred', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
+                            // def tagExistsLocally = sh(script: "git tag | grep -w ${tagName}", returnStatus: true) == 0
+                            // def tagExistsRemotely = sh(script: "git ls-remote --tags origin | grep -w refs/tags/${tagName}", returnStatus: true) == 0
+
+                            // if (!tagExistsLocally && !tagExistsRemotely) {
+                            //     sh "git tag ${tagName}"
+                            //     sh "git push origin ${tagName}"
+                            // }
+
                             sh """
                                 git config user.name ${GIT_USER}
                                 git config user.email saishivam538@outlook.com
