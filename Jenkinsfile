@@ -33,8 +33,9 @@ pipeline {
                             def tagExistsRemotely = sh(script: "git ls-remote --tags origin | grep -w refs/tags/${tagName}", returnStatus: true) == 0
                             echo "tagExistsLocally: ${tagExistsLocally}"
                             echo "tagExistsRemotely: ${tagExistsRemotely}"
-                            if (!tagExistsLocally && !tagExistsRemotely) {
+                            if (tagExistsLocally == 'true' && tagExistsRemotely == 'false') {
                             sh """
+                                git tag -d ${tagName}
                                 git config user.name ${GIT_USER}
                                 git config user.email saishivam538@outlook.com
                                 git tag ${tagName}
