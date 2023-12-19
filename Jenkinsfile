@@ -11,11 +11,9 @@ pipeline {
             steps {
                 script{
                 if(env.BRANCH_NAME.matches('feature.*')){
-                    sh 
-                    """
-                    git checkout develop
-                    git checkout ${env.BRANCH_NAME}
-                    """
+
+                    sh(script: "git checkout  develop", returnStdout: true).trim()
+                    sh(script: "git checkout  ${env.BRANCH_NAME}", returnStdout: true).trim()
                     def merge_commit = sh(script: "git merge-base ${env.BRANCH_NAME} develop", returnStdout: true).trim()
                     echo "this is merge commit : ${merge_commit}"
                     sh(script: "git diff ${merge_commit} HEAD --name-only > changedfiles.txt", returnStdout: true).trim()
