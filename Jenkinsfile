@@ -46,9 +46,11 @@ pipeline {
             steps{
 
                 script{
+                     if(!env.BRANCH_NAME.matches('develop.*')){
 
-                    mergeBaseCommit = sh(script: "git rev-list -n 1 merge-base-${env.BRANCH_NAME}", returnStdout: true).trim()
-                    echo "Merge Base Commit for ${env.BRANCH_NAME} is ${mergeBaseCommit}"
+                        mergeBaseCommit = sh(script: "git rev-list -n 1 merge-base-${env.BRANCH_NAME}", returnStdout: true).trim()
+                        echo "Merge Base Commit for ${env.BRANCH_NAME} is ${mergeBaseCommit}"
+                     }
                 }
             }
         }
