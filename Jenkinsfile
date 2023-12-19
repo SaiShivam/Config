@@ -10,15 +10,15 @@ pipeline {
         stage('get merge commit'){
             steps {
                 script{
-                if(env.BRANCH_NAME.matches('feature.*')){
+                if(env.BRANCH_NAME.startsWith('feature.*')){
                     sh 
                     """
                     git checkout develop
                     git checkout ${env.BRANCH_NAME}
                     """
-                    def merge_commit = sh(script: "git merge-base ${env.BRANCH_NAME} develop", returnStdout: true)
-                    echo "this is merge commit : ${merge-commit}"
-                    sh(script: "git diff ${merge-commit} HEAD --name-only > changedfiles.txt", returnStdout: true)
+                    def merge_commit = sh(script: "git merge-base ${env.BRANCH_NAME} develop", returnStdout: true).trim()
+                    echo "this is merge commit : ${merge_commit}"
+                    sh(script: "git diff ${merge_commit} HEAD --name-only > changedfiles.txt", returnStdout: true).trim()
                     sh 
                     """ 
                     ls -lrt
