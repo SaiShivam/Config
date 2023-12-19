@@ -23,7 +23,7 @@ pipeline {
                 //     sh(script: "cat changedfiles.txt")
                 // }
 
-                if (currentBuild.number < 1) {
+                if (currentBuild.number == 1) {
                         // Define the tag name based on branch name
                         def tagName = "merge-base-${env.BRANCH_NAME}"
                         def repoURL = env.GIT_URL.replaceAll(/^https?:\/\//, '') // Remove the 'http://' or 'https://' part of the URL
