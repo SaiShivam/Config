@@ -10,7 +10,7 @@ pipeline {
         stage('get merge commit'){
             steps {
                 script{
-                if(env.BRANCH_NAME.startsWith('feature.*')){
+                if(env.BRANCH_NAME.matches('feature.*')){
                     sh 
                     """
                     git checkout develop
