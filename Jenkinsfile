@@ -23,7 +23,7 @@ pipeline {
                 //     sh(script: "cat changedfiles.txt")
                 // }
 
-                if (currentBuild.number < 10) {
+                if (currentBuild.number < 1) {
                         // Define the tag name based on branch name
                         def tagName = "merge-base-${env.BRANCH_NAME}"
                         def repoURL = env.GIT_URL.replaceAll(/^https?:\/\//, '') // Remove the 'http://' or 'https://' part of the URL
@@ -35,7 +35,7 @@ pipeline {
                             echo "tagExistsRemotely: ${tagExistsRemotely}"
                             if (tagExistsLocally == true && tagExistsRemotely == false) {
                             sh """
-                                git tag -d ${tagName}
+                                git tag -d ${tagName} || true
                                 git config user.name ${GIT_USER}
                                 git config user.email saishivam538@outlook.com
                                 git tag ${tagName}
