@@ -31,7 +31,8 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'githubcred', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                             def tagExistsLocally = sh(script: "git tag | grep -w ${tagName}", returnStatus: true) == 0
                             def tagExistsRemotely = sh(script: "git ls-remote --tags origin | grep -w refs/tags/${tagName}", returnStatus: true) == 0
-
+                            echo "tagExistsLocally: ${tagExistsLocally}"
+                            echo "tagExistsRemotely: ${tagExistsRemotely}"
                             if (!tagExistsLocally && !tagExistsRemotely) {
                             sh """
                                 git config user.name ${GIT_USER}
