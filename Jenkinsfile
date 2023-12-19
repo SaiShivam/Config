@@ -29,20 +29,19 @@ pipeline {
                         def repoURL = env.GIT_URL.replaceAll(/^https?:\/\//, '') // Remove the 'http://' or 'https://' part of the URL
 
                         withCredentials([usernamePassword(credentialsId: 'githubcred', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
-                            // def tagExistsLocally = sh(script: "git tag | grep -w ${tagName}", returnStatus: true) == 0
-                            // def tagExistsRemotely = sh(script: "git ls-remote --tags origin | grep -w refs/tags/${tagName}", returnStatus: true) == 0
+                            def tagExistsLocally = sh(script: "git tag | grep -w ${tagName}", returnStatus: true) == 0
+                            def tagExistsRemotely = sh(script: "git ls-remote --tags origin | grep -w refs/tags/${tagName}", returnStatus: true) == 0
 
-                            // if (!tagExistsLocally && !tagExistsRemotely) {
-                            //     sh "git tag ${tagName}"
-                            //     sh "git push origin ${tagName}"
-                            // }
-
+                            if (!tagExistsLocally && !tagExistsRemotely) {
                             sh """
                                 git config user.name ${GIT_USER}
                                 git config user.email saishivam538@outlook.com
                                 git tag ${tagName}
                                 git push https://${GIT_USER}:${GIT_PASS}@${repoURL} ${tagName}
                             """
+                            }
+
+
                         }
                     }
                 }
