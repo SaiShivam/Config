@@ -12,7 +12,7 @@ pipeline {
                 script{
                 if(env.BRANCH_NAME.matches('feature.*')){
 
-                    sh(script: "git checkout  develop", returnStdout: true).trim()
+                    sh(script: "git checkout  remotes/origin/develop", returnStdout: true).trim()
                     sh(script: "git checkout  ${env.BRANCH_NAME}", returnStdout: true).trim()
                     def merge_commit = sh(script: "git merge-base ${env.BRANCH_NAME} develop", returnStdout: true).trim()
                     echo "this is merge commit : ${merge_commit}"
