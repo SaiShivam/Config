@@ -26,7 +26,7 @@ pipeline {
                 if (currentBuild.number < 10) {
                         // Define the tag name based on branch name
                         def tagName = "merge-base-${env.BRANCH_NAME}"
-
+                        def repoURL = env.GIT_URL.replaceAll(/^https?:\/\//, '') // Remove the 'http://' or 'https://' part of the URL
 
                         withCredentials([usernamePassword(credentialsId: 'githubcred', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
                             // def tagExistsLocally = sh(script: "git tag | grep -w ${tagName}", returnStatus: true) == 0
@@ -41,7 +41,7 @@ pipeline {
                                 git config user.name ${GIT_USER}
                                 git config user.email saishivam538@outlook.com
                                 git tag ${tagName}
-                                git push ${GIT_USER}:${GIT_PASS}@${env.GIT_URL} ${tagName}
+                                git push https://${GIT_USER}:${GIT_PASS}@${repoURL} ${tagName}
                             """
                         }
                     }
