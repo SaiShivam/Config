@@ -21,6 +21,7 @@ pipeline {
                     sh(script: "git diff ${merge-commit} HEAD --name-only > changedfiles.txt", returnStdout: true)
                     sh 
                     """ 
+                    ls -lrt
                     cat changedfiles.txt
                     """
 
