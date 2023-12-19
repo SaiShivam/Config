@@ -14,9 +14,10 @@ pipeline {
 
                     sh(script: "git checkout  remotes/origin/develop", returnStdout: true).trim()
                     sh(script: "git checkout  ${env.BRANCH_NAME}", returnStdout: true).trim()
-                    def merge_commit = sh(script: "git merge-base ${env.BRANCH_NAME} remotes/origin/develop", returnStdout: true).trim()
+                    def merge_commit = sh(script: "git merge-base remotes/origin/${env.BRANCH_NAME} remotes/origin/develop", returnStdout: true).trim()
                     echo "this is merge commit : ${merge_commit}"
-                    sh(script: "git diff ${merge_commit} HEAD --name-only > changedfiles.txt", returnStdout: true).trim()
+                    sh(script: "git diff ${merge_commit} HEAD --name-only > changedfiles.txt")
+                    sh(script: "ls -lrt", returnStdout: true)
                     sh(script: "cat changedfiles.txt", returnStdout: true)
                 }
                 }
