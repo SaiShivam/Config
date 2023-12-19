@@ -1,3 +1,4 @@
+def mergeBaseCommit = ""
 pipeline {
     agent any
 
@@ -46,7 +47,7 @@ pipeline {
 
                 script{
 
-                    def mergeBaseCommit = sh(script: "git rev-list -n 1 merge-base-${env.BRANCH_NAME}", returnStdout: true).trim()
+                    mergeBaseCommit = sh(script: "git rev-list -n 1 merge-base-${env.BRANCH_NAME}", returnStdout: true).trim()
                     echo "Merge Base Commit for ${env.BRANCH_NAME} is ${mergeBaseCommit}"
                 }
             }
