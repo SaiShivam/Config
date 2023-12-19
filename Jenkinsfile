@@ -9,6 +9,7 @@ pipeline {
                 }
         stage('get merge commit'){
             steps {
+                script{
                 if(env.BRANCH_NAME.matches('feature*')){
 
                     def merge_commit = sh(script: "git merge-base ${env.BRANCH_NAME} develop", returnStdout: true)
@@ -19,6 +20,7 @@ pipeline {
                     cat changedfiles.txt
                     """
 
+                }
                 }
                 
             }
