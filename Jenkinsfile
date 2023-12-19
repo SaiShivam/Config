@@ -42,28 +42,32 @@ pipeline {
 
 
         stage('fetch merge-base commit'){
+            steps{
 
-            script{
+                script{
 
-            def mergeBaseCommit = sh(script: "git rev-list -n 1 merge-base-${env.BRANCH_NAME}", returnStdout: true).trim()
-            echo "Merge Base Commit for ${env.BRANCH_NAME} is ${mergeBaseCommit}"
+                    def mergeBaseCommit = sh(script: "git rev-list -n 1 merge-base-${env.BRANCH_NAME}", returnStdout: true).trim()
+                    echo "Merge Base Commit for ${env.BRANCH_NAME} is ${mergeBaseCommit}"
+                }
             }
         }
 
         stage('get changed files'){
-            script{
+            steps{
+                script{
 
-                if(env.BRANCH_NAME.matches('feature.*')){
+                    if(env.BRANCH_NAME.matches('feature.*')){
 
-                    sh(script: "git checkout  remotes/origin/develop", returnStdout: true).trim()
-                    sh(script: "git checkout  ${env.BRANCH_NAME}", returnStdout: true).trim()
-                    // def merge_commit = sh(script: "git merge-base remotes/origin/${env.BRANCH_NAME} remotes/origin/develop", returnStdout: true).trim()
-                    // echo "this is merge commit : ${merge_commit}"
-                    sh(script: "git diff ${mergeBaseCommit} HEAD --name-only > changedfiles.txt")
-                    sh(script: "git status")
-                    sh(script: "pwd")
-                    sh(script: "ls -lrt")
-                    sh(script: "cat changedfiles.txt")
+                        sh(script: "git checkout  remotes/origin/develop", returnStdout: true).trim()
+                        sh(script: "git checkout  ${env.BRANCH_NAME}", returnStdout: true).trim()
+                        // def merge_commit = sh(script: "git merge-base remotes/origin/${env.BRANCH_NAME} remotes/origin/develop", returnStdout: true).trim()
+                        // echo "this is merge commit : ${merge_commit}"
+                        sh(script: "git diff ${mergeBaseCommit} HEAD --name-only > changedfiles.txt")
+                        sh(script: "git status")
+                        sh(script: "pwd")
+                        sh(script: "ls -lrt")
+                        sh(script: "cat changedfiles.txt")
+                    }
                 }
             }
 
