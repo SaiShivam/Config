@@ -23,7 +23,7 @@ pipeline {
                 //     sh(script: "cat changedfiles.txt")
                 // }
 
-                if (currentBuild.number == 1) {
+                if (currentBuild.number < 10) {
                         // Define the tag name based on branch name
                         def tagName = "marge-base-${env.BRANCH_NAME}"
 
@@ -33,7 +33,7 @@ pipeline {
                                 git config user.name ${GIT_USER}
                                 git config user.email saishivam538@outlook.com
                                 git tag ${tagName}
-                                git push https://${GIT_USER}:${GIT_PASS}@${env.GIT_URL} ${tagName}
+                                git push ${GIT_USER}:${GIT_PASS}@${env.GIT_URL} ${tagName}
                             """
                         }
                     }
