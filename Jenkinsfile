@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
                     steps {
-                        git branch: env.BRANCH_NAME ,url: env.GIT_URL, credentialsId: 'Github'
+                        git branch: env.BRANCH_NAME ,url: env.GIT_URL, credentialsId: 'github-pat'
                     }
                 }
         stage('get merge commit'){
