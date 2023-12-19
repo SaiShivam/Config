@@ -17,6 +17,7 @@ pipeline {
                     def merge_commit = sh(script: "git merge-base remotes/origin/${env.BRANCH_NAME} remotes/origin/develop", returnStdout: true).trim()
                     echo "this is merge commit : ${merge_commit}"
                     sh(script: "git diff ${merge_commit} HEAD --name-only > changedfiles.txt")
+                    sh(script: "pwd", returnStdout: true)
                     sh(script: "ls -lrt", returnStdout: true)
                     sh(script: "cat changedfiles.txt", returnStdout: true)
                 }
