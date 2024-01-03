@@ -59,7 +59,7 @@ pipeline {
             steps{
                 script{
 
-                    if(env.BRANCH_NAME.matches('feature.*')){
+                    if(!env.BRANCH_NAME.matches('develop.*')){
 
                         sh(script: "git checkout  remotes/origin/develop", returnStdout: true).trim()
                         sh(script: "git checkout  ${env.BRANCH_NAME}", returnStdout: true).trim()
